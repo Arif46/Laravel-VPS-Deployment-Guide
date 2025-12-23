@@ -247,3 +247,13 @@ chmod -R 775 storage bootstrap/cache
 
 
 Optional deploy script (deploy.sh) to automate updates
+
+# Project Architecture
+
+Here is the system architecture diagram:
+
+![Architecture](images/architecture.png)
+
+Or using HTML to control size:
+
+<img src="images/architecture.png" alt="Architecture" width="600"/>
