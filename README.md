@@ -256,4 +256,4 @@ Here is the system architecture diagram:
 
 Or using HTML to control size:
 
-<img src="images/architecture.png" alt="Architecture" width="600"/>
+<img src="/images/architecture.png" alt="Architecture" width="600"/>
