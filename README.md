@@ -308,3 +308,57 @@ Here is the system architecture diagram:
 Or using HTML to control size:
 
 <img src="/images/architecture.png" alt="Architecture" width="600"/>
+
+# Project javascript setup 
+
+# Install Node.js & npm
+
+# curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+setup_20.x  version point which install
+# sudo apt install -y nodejs
+# node -v
+# npm -v
+
+## Clone Next.js Project
+
+#cd /var/www
+#git clone git@github.com:Arif46/next-smartplc.git
+# cd smartplcbd
+
+#Install Dependencies
+
+------npm install---------------
+
+# Build Next.js Project
+
+--------------npm run build--------------
+
+# Run Next.js with PM2
+--------sudo npm install -g pm2--------------
+
+# Start Next.js in production:
+----------pm2 start npm --name "next-smartplc" -- start------------
+
+# Nginx Reverse Proxy for Next.js
+
+----------sudo nano /etc/nginx/sites-available/smartplcbd.com.conf--------
+
+server {
+    listen 80;
+    server_name smartplcbd.com www.smartplcbd.com;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+# Enable site & reload Nginx
+
+---------sudo ln -s /etc/nginx/sites-available/smartplcbd.com.conf /etc/nginx/sites-enabled/-----------
+-----------sudo nginx -t------------------
+----------sudo systemctl reload nginx-------------
