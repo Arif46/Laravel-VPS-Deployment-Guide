@@ -202,6 +202,10 @@ server {
     }
 }
 
+## Save & exit:
+
+## Ctrl+O → Enter → Ctrl+X
+
 6.2 Enable & Reload Nginx
 ln -s /etc/nginx/sites-available/backbone.smartplcbd.com.conf /etc/nginx/sites-enabled/
 nginx -t
@@ -211,6 +215,53 @@ systemctl reload nginx
 7.1 Install phpMyAdmin
 apt install phpmyadmin -y
 
+
+7.2. Create new Nginx config for phpMyAdmin
+
+## sudo nano /etc/nginx/sites-available/phpmyadmin.conf
+
+
+##phpmyadmin.conf 
+
+server {
+    listen 80;
+    server_name 167.172.77.185;
+
+    root /usr/share/phpmyadmin;
+    index index.php index.html;
+
+    location /phpmyadmin {
+        alias /usr/share/phpmyadmin/;
+        index index.php;
+
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+            fastcgi_param SCRIPT_FILENAME $request_filename;
+        }
+
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico|html|xml|txt)$ {
+            expires max;
+            log_not_found off;
+        }
+    }
+}
+
+## Save & exit:
+
+## Ctrl+O → Enter → Ctrl+X
+
+Enable this site
+
+## sudo ln -s /etc/nginx/sites-available/phpmyadmin.conf /etc/nginx/sites-enabled/
+
+Test Nginx config
+
+## sudo nginx -t
+
+if ok then reload 
+
+sudo systemctl reload nginx
 
 Select nginx (configure manually if not shown)
 
